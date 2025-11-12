@@ -10,6 +10,7 @@ nonisolated public enum OpenAIRealtimeMessage: Sendable {
     case sessionCreated // "session.created"
     case sessionUpdated // "session.updated"
     case responseCreated // "response.created"
+    case responseDone([String]) // "response.done"
     case responseAudioDelta(String) // "response.audio.delta"
     case inputAudioBufferSpeechStarted // "input_audio_buffer.speech_started"
     case responseFunctionCallArgumentsDone(String, String, String) // "response.function_call_arguments.done"

@@ -157,6 +157,19 @@ nonisolated private let kWebsocketDisconnectedEarlyThreshold: TimeInterval = 3
                let callId = json["call_id"] as? String {
                 self.continuation?.yield(.responseFunctionCallArgumentsDone(name, arguments, callId))
             }
+          
+        case "response.done":
+          if
+            let response = json["response"] as? [String: Any],
+            let outputs = response["output"] as? [[String: Any]]
+          {
+            for output in outputs {
+              if let contents = output["content"] as? [[String: Any]] {
+                let text = contents.compactMap { $0["text"] as? String }
+                self.continuation?.yield(.responseDone(text))
+              }
+            }
+          }
         
         // New cases for handling transcription messages
         case "response.audio_transcript.delta":
